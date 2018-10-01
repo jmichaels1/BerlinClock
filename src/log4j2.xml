@@ -16,7 +16,7 @@
  </Appenders>
  
  <Loggers>
-  <logger name="everis.com" level="ALL" additivity="false">
+  <logger name="com.everis" level="ALL" additivity="false">
    <AppenderRef ref="File" level="INFO" />
    <AppenderRef ref="Console" level="ALL"/>
   </logger>

@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.everis.controller.ClockController;
 import com.everis.model.ClockException;
+import com.everis.view.ClockPrinterConsole;
 
 /**
  * 
@@ -20,11 +21,13 @@ public class Main {
 		 
 		 try {
 			 
-			 ClockController controller = new ClockController();
-			 controller.printTime("05:24:00");
+			 ClockController controller = new ClockController(new ClockPrinterConsole());
+			 controller.printTime("22:55:12");
 			
 		} catch (ClockException e) {
+			
 			log.fatal(e.getMessage());
+
 		}
 	}
 

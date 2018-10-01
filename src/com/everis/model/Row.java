@@ -1,10 +1,7 @@
 package com.everis.model;
 
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * 
@@ -13,7 +10,6 @@ import org.apache.logging.log4j.Logger;
  */
 public class Row {
 	
-	private static AtomicInteger countID = new AtomicInteger(-1);
 	private int rowID;
 	private ArrayList<Lamp> aLamp;
 	
@@ -24,9 +20,9 @@ public class Row {
 	 * @param numRow
 	 * @param aLamp
 	 */
-	public Row(boolean isTop) {
-		this.rowID = countID.incrementAndGet();
-		initializeLamps(isTop);
+	public Row(int rowID) {
+		this.rowID = rowID;
+		initializeLamps(rowID == 0 || rowID ==2);
 	}
 	
 	/***** Getters and Setters ******/
@@ -49,7 +45,6 @@ public class Row {
 	
 	/******* Métodos Agregados ********/
 	 
-	
 	/**
 	 * initialize lamps
 	 * @param isTop
@@ -57,22 +52,20 @@ public class Row {
 	 * @param lastIDLamp
 	 */
 	public void initializeLamps(boolean isTop) {
-		int valueLamp = -1;
-		int cantLamp = 4;
-		
 		aLamp = new ArrayList<>();
-		
-		if (rowID == 0 || rowID == 1)  // for hour lamps
-			for (int i = 0; i < cantLamp; i++) 
-				aLamp.add(new HourLamp(isTop));
-		else { 							// for minute lamps
-			if (isTop) cantLamp = 11;
-			for (int i = 0; i < cantLamp; i++) {
-				boolean isRed = false;
-				if (isTop && (i == 2 || i == 5 || i == 8)) isRed = true;
-				aLamp.add(new MinuteLamp(isTop, isRed));
-			}
+		for (int i = 0; i < quantLamp(isTop); i++) {
+			if (rowID == 0 || rowID == 1) aLamp.add(new HourLamp(isTop));
+			else aLamp.add(new MinuteLamp(isTop, isTop && (i == 2 || i == 5 || i == 8)));
 		}
+	}
+	
+	/***
+	 * quantitat Lamps for Row
+	 * @param isTop
+	 * @return
+	 */
+	public int quantLamp(boolean isTop) {
+		return isTop && (rowID == 2) ? 11 : 4;
 	}
 	
 	/**

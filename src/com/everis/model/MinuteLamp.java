@@ -12,8 +12,7 @@ public class MinuteLamp extends Lamp {
 	 */
 	public MinuteLamp(boolean isTop, boolean isRed) {
 		super(isTop);
-		if (isRed) representation = "R";
-		else representation = "Y";
+		representation = isRed? "R" : "Y";
 	}
 
 
